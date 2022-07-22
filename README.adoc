@@ -1,0 +1,13 @@
+# java-script-logging-demo
+
+User Story: As a dev/customer I would like to know how the rlo_08 + rlp_02 do work together in a real application
+
+* Demo web client app sends the HTTP request message (message1) to the node server
+* Server uses the RLO_08 library to build the Syslog message including the User Agent details from the Demo web client app and send HTTP response for the demo web client app request
+* Display the syslog message with rlp_03 example application (link to be provided)
+* Use github workflow to setup the environment:
+** Launch the rlp_03 for listening data
+*** Show logged lines of the rlp_03
+** Launch server with rlo_08 and rlp_02
+** Launch demo web client app
+*** Make request
