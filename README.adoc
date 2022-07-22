@@ -1,4 +1,4 @@
-# java-script-logging-demo
+# javascript-logging-demo
 
 User Story: As a dev/customer I would like to know how the rlo_08 + rlp_02 do work together in a real application
 
