@@ -1,5 +1,7 @@
 const http = require('http');
-const SyslogMessage = require('@teragrep/rlo_08/src/main/js/SyslogMessage')
+
+//var { SyslogMessage, Facility, Severity } = require('@teragrep/rlo_08') // @todo Not working, check for the dev flexibility 
+const SyslogMessage = require('@teragrep/rlo_08/src/main/js/SyslogMessage') 
 const Facility = require('@teragrep/rlo_08/src/main/js/Facility')
 const Severity = require('@teragrep/rlo_08/src/main/js/Severity')
 const SDElement = require('@teragrep/rlo_08/src/main/js/SDElement')
