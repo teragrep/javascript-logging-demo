@@ -1,0 +1,35 @@
+{
+  "name": "@teragrep/javascript-logging-demo",
+  "version": "v1.0.0",
+  "description": "Syslog Javascript client library",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/teragrep/javascript-logging-demo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/teragrep/javascript-logging-demo/issues"
+  },
+  "scripts": {
+    "test": "karma start --single-run  ./src/test/js/karma.conf.js",
+    "karma-test": "jasmine",
+    "postpublish": "npm run publish-npm",
+    "publish-npm": "npm publish --access public --ignore-scripts --@teragrep:registry='https://registry.npmjs.org'"
+  },
+  "author": "Teragrep",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@teragrep/rlo_08": "^1.0.1",
+    "@teragrep/rlp_02": "^1.0.19-rc8",
+    "async": "^3.2.1",
+    "async-mutex": "^0.3.2",
+    "dotenv": "^10.0.0",
+    "dsa.js": "^2.7.6",
+    "jasmine": "^3.99.0",
+    "jasmine-core": "^3.7.1",
+    "karma": "^6.3.3",
+    "karma-jasmine": "^4.0.1",
+    "karma-requirejs": "^1.1.0",
+    "node": "^16.16.0",
+    "requirejs": "^2.3.6"
+  }
+}
