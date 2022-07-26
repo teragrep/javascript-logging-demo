@@ -16,6 +16,13 @@
       <node.version>16.14.0</node.version>
       <npm.version>8.3.1</npm.version>
    </properties>
+   <dependencies>
+      <dependency>
+         <groupId>com.teragrep</groupId>
+         <artifactId>rlp_03</artifactId>
+         <version>1.0.0</version>
+      </dependency>      
+   </dependencies>
    <build>
       <plugins>
          <plugin>
@@ -94,7 +101,7 @@
       <repository>
          <id>github</id>
          <name>GitHub Packages</name>
-         <url>https://npm.pkg.github.com/teragrep/js-logging-demo</url>
+         <url>https://npm.pkg.github.com/teragrep/javasript-logging-demo</url>
       </repository>
    </distributionManagement>
 </project>
