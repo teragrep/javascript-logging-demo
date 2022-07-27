@@ -7,9 +7,6 @@ const SDParam = require('@teragrep/rlo_08/src/main/js/SDParam')
 const UserAgent = require('user-agents')
 
 
-const host = 'localhost';
-const port = 3000;
-
 const requestListener = function (req, res) {
     if (req.url == '/') {
         // Set response content    
@@ -40,36 +37,35 @@ const requestListener = function (req, res) {
     else if (req.url == "/ua") {
 
       async function load() {
-      const userAgent = new UserAgent().toString();
-      console.log(userAgent.toString());
-
-      // Set response header
-      res.writeHead(200, { 'Content-Type': 'text/html' }); 
-
-      const dateTimestamp = '2014-07-24T17:57:36+03:00';
-      const timestamp = (new Date(dateTimestamp)).getTime();
-
-      let message = new SyslogMessage.Builder()
-        .withAppName('bulk-data-sorted') //valid
+        const userAgent = req.headers['user-agent']
+        console.log(userAgent.toString());
+        
+        // Set response header
+        res.writeHead(200, { 'Content-Type': 'text/html' }); 
+        const dateTimestamp = '2014-07-24T17:57:36+03:00';
+        const timestamp = (new Date(dateTimestamp)).getTime();
+        
+        let message = new SyslogMessage.Builder()
+          .withAppName('bulk-data-sorted') //valid
        // .withTimestamp(timestamp) // In case if the timestamp disabled, it will go with system timestamp.
-        .withHostname('iris.teragrep.com') //valid
-        .withFacility(Facility.LOCAL0)
-        .withSeverity(Severity.INFORMATIONAL)
-        .withProcId('8740') //validatied for the PRINTUSASCII format
-        .withMsgId('ID47')
-        .withMsg(userAgent) // Fixed
-        .withSDElement(new SDElement("exampleSDID@32473", new SDParam("iut", "3"), new SDParam("eventSource", "Application"))) // Fix the space before the previous 
-        .build()
+         .withHostname('iris.teragrep.com') //valid
+          .withFacility(Facility.LOCAL0)
+          .withSeverity(Severity.INFORMATIONAL)
+          .withProcId('8740') //validatied for the PRINTUSASCII format
+          .withMsgId('ID47')
+          .withMsg(userAgent) // Fixed
+          .withSDElement(new SDElement("exampleSDID@32473", new SDParam("iut", "3"), new SDParam("eventSource", "Application"))) // Fix the space before the previous 
+          .build()
 
         console.log(message)
     
 
-      let rfc5424message;
-         rfc5424message = await message.toRfc5424SyslogMessage();
-         res.writeHead(200, { 'Content-Type': 'text/html' });
-         res.write(rfc5424message.toString(), 'utf-8', () => {
-           console.log('Writing ', rfc5424message.toString());
-         });
+        let rfc5424message;
+        rfc5424message = await message.toRfc5424SyslogMessage();
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.write(rfc5424message.toString(), 'utf-8', () => {
+        console.log('Writing ', rfc5424message.toString());
+       });
          res.end(); //end the response
       }
       load();        
@@ -77,8 +73,4 @@ const requestListener = function (req, res) {
     else
         res.end('Invalid Request!'); //end the response   
 };
-
-const server = http.createServer(requestListener);
-server.listen(port, host, () => {
-    console.log(`Server is running on http://${host}:${port}`);
-});
+module.exports = requestListener;
