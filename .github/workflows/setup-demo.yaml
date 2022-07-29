@@ -2,7 +2,7 @@ name: setup-demo
 on: [push]
 jobs: 
   verify:
-    name:Verify Code
+    name: Verify Code
     runs-on: ubuntu-latest
 
     steps: 
@@ -22,4 +22,4 @@ jobs:
 
       - name: Compile Test
         run: mcn clean package
-         
+
