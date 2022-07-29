@@ -1,0 +1,25 @@
+name: setup-demo
+on: [push]
+jobs: 
+  verify:
+    name:Verify Code
+    runs-on: ubuntu-latest
+
+    steps: 
+      - uses: actions/checkout@v2
+
+      - name: Setup Maven
+        uses: actions/setup-java@v2
+        with:
+          java-version: 8.0.292+10
+          distribution: 'adopt'
+
+      - name: Cache Local Maven Repo
+        uses: actions/cache@v2
+        with: 
+          path:  ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+
+      - name: Compile Test
+        run: mcn clean package
+         
