@@ -1,5 +1,5 @@
 /**
- * This is our Node server to handle the http service using the RLP_02 and RLO_08
+ * This is our Mock Node server to show how to handle the http service using the RLP_02 and RLO_08
  * 
  */
 const http = require('http');
@@ -13,8 +13,18 @@ const RelpConnection = require('@teragrep/rlp_02/src/main/js/RelpConnection')
 const RelpBatch = require('@teragrep/rlp_02/src/main/js/RelpBatch')
 const async = require('async')
 
+let relpConnection;
 
+/**
+ * IIFE connection setup 
+ */
 
+let conn = (async () => {
+  let host = 'localhost';
+  let port = 1601;
+  await setupConnection(port, host)
+
+})();
 
 const requestListener = function (req, res) {
     if (req.url == '/') {
@@ -72,9 +82,6 @@ const requestListener = function (req, res) {
         rfc5424message = await message.toRfc5424SyslogMessage();
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.write(rfc5424message.toString(), 'utf-8', async() => {
-          let host = 'localhost';
-          let port = 1601;
-            await setupConnection(port, host)
             await commit(rfc5424message)
        });
         res.end(); //end the response
@@ -87,7 +94,7 @@ const requestListener = function (req, res) {
 module.exports = requestListener;
 
 
-let relpConnection;
+
 
 /**
  * decouple the relp connection set up from sending message in the demo node server, Have an issue
