@@ -1,3 +1,7 @@
+/**
+ * This is our Node server to handle the http service using the RLP_02 and RLO_08
+ * 
+ */
 const http = require('http');
 const SyslogMessage = require('@teragrep/rlo_08/src/main/js/SyslogMessage')
 const Facility = require('@teragrep/rlo_08/src/main/js/Facility')
@@ -64,14 +68,14 @@ const requestListener = function (req, res) {
           .withDebug(true)
           .build()
 
-    
-
         let rfc5424message;
         rfc5424message = await message.toRfc5424SyslogMessage();
         res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write(rfc5424message.toString(), 'utf-8', () => {
-       // console.log('Writing ', rfc5424message.toString());
-        sendMessage(rfc5424message)
+        res.write(rfc5424message.toString(), 'utf-8', async() => {
+          let host = 'localhost';
+          let port = 1601;
+            await setupConnection(port, host)
+            await commit(rfc5424message)
        });
         res.end(); //end the response
       }
@@ -82,47 +86,22 @@ const requestListener = function (req, res) {
 };
 module.exports = requestListener;
 
-function sendMessage(msg){
 
-  let relpConnection = new RelpConnection();
-  let host = '127.0.0.1'; 
-  let rlp_03_Port = 1601; // Tested with Docker CFE
-  
-  
-  async.waterfall(
-    [
-		function init(setConnect) {
-            setConnect(null, rlp_03_Port, host)
-        },
-		connect,
-    commit,
-    disconnect
-    ],
-  
-    function (err) {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            console.log('No Error')
-        }
-    }
-  );
-  async function connect() {
-    let conn = await relpConnection.connect(rlp_03_Port, host);	
-    console.log('Connectig...',host,' at PORT ', rlp_03_Port)
-    return conn;
-  }
-  async function disconnect(state) {
-    if(state){
-      await relpConnection.disconnect();
-      }
-    else {
-    console.log('Check the connection...')
-    }
-  }
-  
-  async function commit(){
+let relpConnection;
+
+/**
+ * decouple the relp connection set up from sending message in the demo node server, Have an issue
+ * next integrate the java-relp-server to the workflow 
+ */
+
+async function setupConnection(port, host){
+  relpConnection = new RelpConnection();
+  let conn = await relpConnection.connect(port, host);	
+  console.log('Connectig...',host,' at PORT ', port)
+
+}
+
+ async function commit(msg){
     return new Promise(async(resolve, reject) => {
       let relpBatch = new RelpBatch();
       relpBatch.insert(msg);
@@ -145,4 +124,8 @@ function sendMessage(msg){
      return resolve(true);
     }) 
   }
-}
+
+  async function disconnect(){
+    relpConnection.disconnect()
+  }
+  

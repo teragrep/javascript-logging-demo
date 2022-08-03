@@ -10,5 +10,6 @@ User Story: As a dev/customer I would like to know how the rlo_08 + rlp_02 do wo
 ** Launch the rlp_03 for listening data
 *** Show logged lines of the rlp_03
 ** Launch server with rlo_08 and rlp_02
+*** RELP Connection should be kept online for sending meaning not connect and disconnect for each message.
 ** Launch demo web client app
 *** Make request
