@@ -26,7 +26,7 @@ let conn = (async () => {
 
 })();
 
-const requestListener = function (req, res) {
+const MockServer = function (req, res) {
     if (req.url == '/') {
         // Set response content    
         res.write(
@@ -91,13 +91,13 @@ const requestListener = function (req, res) {
     else
         res.end('Invalid Request!'); //end the response   
 };
-module.exports = requestListener;
+module.exports = MockServer;
 
 
 
 
 /**
- * decouple the relp connection set up from sending message in the demo node server, Have an issue
+ * decouple the relp connection set up from sending message in the demo node server,
  * next integrate the java-relp-server to the workflow 
  */
 

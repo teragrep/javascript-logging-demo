@@ -1,10 +1,10 @@
-const requestListener = require('../../node-server/NodeServer');
+const MockServer = require('../../node-server/MockServer');
 const http = require('http')
 
 const host = 'localhost';
 const port = 3000;
 
-const server = http.createServer(requestListener);
+const server = http.createServer(MockServer);
 server.listen(port, host, () => {
     console.log(`Server is running on http://${host}:${port}`);
 });
