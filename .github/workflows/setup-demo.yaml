@@ -1,9 +1,7 @@
 name: setup-demo
-on: []
-jobs: 
-  java-relp-server:
+on: [push]
+jobs:
   verify:
-    needs: [java-relp]
     name: Verify Code
     runs-on: ubuntu-latest
 
@@ -20,7 +18,16 @@ jobs:
         uses: actions/cache@v2
         with: 
           path:  ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}"  
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}" 
+
+      - name: Java-Relp-Server-Demo 
+        run: |
+         git clone https://github.com/teragrep/java-relp-server-demo.git
+         cd java-relp-server-demo
+         mvn clean package 
+         cd target
+         java -jar java-relp-server-demo-jar-with-dependencies.jar  
+          
 
       - name: Compile Test
         run: mvn clean package
