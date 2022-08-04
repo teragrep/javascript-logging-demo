@@ -29,8 +29,6 @@ jobs:
          echo "${GITHUB_WORKSPACE}/java-relp-server-demo/target" 
          cd staging
          java -jar java-relp-server-demo-jar-with-dependencies.jar
-         echo "${GITHUB_WORKSPACE}/java-relp-server-demo/" 
-          
 
       - name: Compile Test
         run: mvn clean package
