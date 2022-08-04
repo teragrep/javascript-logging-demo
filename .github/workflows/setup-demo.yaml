@@ -22,6 +22,7 @@ jobs:
 
       - name: Java-Relp-Server-Demo 
         run: |
+         chmod +x "${GITHUB_WORKSPACE}/src/java-relp-server-demo/java-relp-server-demo-jar-with-dependencies.jar"
          chmod +x "${GITHUB_WORKSPACE}/src/java-relp-server-demo/relp.sh"  
          "${GITHUB_WORKSPACE}/src/java-relp-server-demo/relp.sh"  
 
