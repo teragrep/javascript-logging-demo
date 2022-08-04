@@ -21,7 +21,9 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
 
       - name: Java-Relp-Server-Demo 
-        run: "${GITHUB_WORKSPACE}/src/java-relp-server-demo/relp.sh"  
+        run: |
+         chmod +x "${GITHUB_WORKSPACE}/src/java-relp-server-demo/relp.sh"  
+         "${GITHUB_WORKSPACE}/src/java-relp-server-demo/relp.sh"  
 
       - name: Compile Test
         run: mvn clean package
