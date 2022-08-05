@@ -26,9 +26,8 @@ jobs:
          cd java-relp-server-demo
          mvn clean package
          mkdir staging && cp target/*.jar staging
-         echo "${GITHUB_WORKSPACE}/java-relp-server-demo/target" 
          cd staging
-         java -jar java-relp-server-demo-jar-with-dependencies.jar
+         java -jar java-relp-server-demo-jar-with-dependencies.jar & 
 
       - name: Compile Test
         run: mvn clean package
