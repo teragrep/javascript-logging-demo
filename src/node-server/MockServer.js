@@ -1,5 +1,7 @@
 /**
  * This is our Mock Node server to show how to handle the http service using the RLP_02 and RLO_08
+ * @todo package load 
+ * 
  * 
  */
 const http = require('http');
@@ -11,22 +13,27 @@ const SDParam = require('@teragrep/rlo_08/src/main/js/SDParam')
 //const {RelpBatch, RelpConnection, RelpRequest, RelpWindow} = require("@teragrep/rlp_02");
 const RelpConnection = require('@teragrep/rlp_02/src/main/js/RelpConnection')
 const RelpBatch = require('@teragrep/rlp_02/src/main/js/RelpBatch')
-const async = require('async')
+const async = require('async');
+
 
 let relpConnection;
-
 /**
  * IIFE connection setup 
+ * For the initial connection setup
  */
 
 let conn = (async () => {
-  let host = 'localhost';
-  let port = 1601;
-  await setupConnection(port, host)
-
+  init()
 })();
 
+
+init()
+restService();
+
+
+function restService(){
 const MockServer = function (req, res) {
+
     if (req.url == '/') {
         // Set response content    
         res.write(
@@ -74,7 +81,7 @@ const MockServer = function (req, res) {
           .withProcId('8740') 
           .withMsgId('ID47')
           .withMsg(userAgent) // Fixed
-          .withSDElement(new SDElement("exampleSDID@32473", new SDParam("iut", "3"), new SDParam("eventSource", "Application"))) // Fix the space before the previous 
+          .withSDElement(new SDElement("exampleSDID@32473", new SDParam("iut", "3"), new SDParam("eventSource", "Application")))  
           .withDebug(true)
           .build()
 
@@ -92,9 +99,18 @@ const MockServer = function (req, res) {
         res.end('Invalid Request!'); //end the response   
 };
 module.exports = MockServer;
+}
 
 
 
+
+function init(){
+  let conn = (async () => {
+    let host = 'localhost';
+    let port = 1601;
+    await setupConnection(port, host);
+  })();
+}
 
 /**
  * decouple the relp connection set up from sending message in the demo node server,
@@ -102,10 +118,12 @@ module.exports = MockServer;
  */
 
 async function setupConnection(port, host){
-  relpConnection = new RelpConnection();
-  let conn = await relpConnection.connect(port, host);	
-  console.log('Connectig...',host,' at PORT ', port)
-
+  return new Promise(async (resolve, reject) => {
+    relpConnection = new RelpConnection();
+    let conn = await relpConnection.connect(port, host);	
+    console.log('Connectig...',host,' at PORT ', port, conn)
+    resolve(true)
+  })
 }
 
  async function commit(msg){
