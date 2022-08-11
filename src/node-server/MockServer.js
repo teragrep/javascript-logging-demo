@@ -16,23 +16,55 @@ const RelpBatch = require('@teragrep/rlp_02/src/main/js/RelpBatch')
 const async = require('async');
 
 
-let relpConnection;
+let  relpConnection;
+let conn;
+let host = 'localhost';
+let port = 1601;
 /**
  * IIFE connection setup 
  * For the initial connection setup
  */
 
-let conn = (async () => {
-  init()
+
+conn = (async () => { // This is for initial connection request
+  await init()
 })();
 
+if(conn != true){ // Dirty hack for fix the async flow control
+  init()
+  restService();
+}
 
-init()
-restService();
 
 
-function restService(){
-const MockServer = function (req, res) {
+/**
+ * 
+ */
+/*
+async.waterfall([
+  function setConnect(start){
+    start(null, port, host)
+  },
+  setupConnection,
+  restService,
+  disconnect
+], function(err, result) {
+  if(err){
+    console.log('Error: '+ err)
+  }
+  else{
+    console.log('Done '+ result)  }
+})
+
+*/
+
+/**
+ * 
+ */
+function restService(start, done){
+  console.log('Service '+start)
+    
+  const MockServer = function (req, res) {
 
     if (req.url == '/') {
         // Set response content    
@@ -75,7 +107,7 @@ const MockServer = function (req, res) {
         let message = new SyslogMessage.Builder()
           .withAppName('bulk-data-sorted') //valid
        // .withTimestamp(timestamp) // In case if the timestamp disabled, it will go with system timestamp.
-          .withHostname(ip) //valid
+          .withHostname(ip) //valid  
           .withFacility(Facility.LOCAL0)
           .withSeverity(Severity.INFORMATIONAL)
           .withProcId('8740') 
@@ -103,12 +135,11 @@ module.exports = MockServer;
 
 
 
-
 function init(){
   let conn = (async () => {
     let host = 'localhost';
     let port = 1601;
-    await setupConnection(port, host);
+    let connection = await setupConnection(port, host);
   })();
 }
 
@@ -151,6 +182,6 @@ async function setupConnection(port, host){
   }
 
   async function disconnect(){
-    relpConnection.disconnect()
+    await relpConnection.disconnect()
   }
   
