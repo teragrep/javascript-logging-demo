@@ -1,11 +1,13 @@
 const MockServer = require('../../node-server/MockServer');
 const http = require('http');
-const InitServer = require('../../node-server/MockServer');
+
 
 const host = 'localhost';
 const port = 3000;
+/*
 
 const server = http.createServer(MockServer);
+
 
 
 
@@ -34,3 +36,8 @@ req.on('error', (err) => {
     console.error(err);
 })
 req.end();
+
+
+// Check the server up 
+
+*/

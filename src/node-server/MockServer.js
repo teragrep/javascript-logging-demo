@@ -26,6 +26,23 @@ let port = 1601;
  */
 
 
+
+async function contrlFlow(){
+  conn = await init()
+  if(conn){
+    console.log('Control Flow Success')
+    await restService()
+    console.log('Control Flow Success again')
+
+  };
+}
+
+(async () => {(await contrlFlow())})();
+
+
+
+/*
+
 conn = (async () => { // This is for initial connection request
   await init()
 })();
@@ -55,14 +72,14 @@ async.waterfall([
   else{
     console.log('Done '+ result)  }
 })
-
 */
+
 
 /**
  * 
  */
-function restService(start, done){
-  console.log('Service '+start)
+function restService(){
+  console.log('Service' )
     
   const MockServer = function (req, res) {
 
@@ -135,20 +152,20 @@ module.exports = MockServer;
 
 
 
-function init(){
-  let conn = (async () => {
+async function init(){
+  
     let host = 'localhost';
     let port = 1601;
-    let connection = await setupConnection(port, host);
-  })();
-}
+     return await setupConnection(port, host);
+  }
+
 
 /**
  * decouple the relp connection set up from sending message in the demo node server,
  * next integrate the java-relp-server to the workflow 
  */
 
-async function setupConnection(port, host){
+function setupConnection(port, host){
   return new Promise(async (resolve, reject) => {
     relpConnection = new RelpConnection();
     let conn = await relpConnection.connect(port, host);	
