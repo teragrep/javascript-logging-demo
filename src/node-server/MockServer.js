@@ -1,18 +1,12 @@
 /**
  * This is our Mock Node server to show how to handle the http service using the RLP_02 and RLO_08
- * @todo package load 
+ * @todo Testcase test-client use case only
  * 
  * 
  */
 const http = require('http');
-const SyslogMessage = require('@teragrep/rlo_08/src/main/js/SyslogMessage')
-const Facility = require('@teragrep/rlo_08/src/main/js/Facility')
-const Severity = require('@teragrep/rlo_08/src/main/js/Severity')
-const SDElement = require('@teragrep/rlo_08/src/main/js/SDElement')
-const SDParam = require('@teragrep/rlo_08/src/main/js/SDParam')
-//const {RelpBatch, RelpConnection, RelpRequest, RelpWindow} = require("@teragrep/rlp_02");
-const RelpConnection = require('@teragrep/rlp_02/src/main/js/RelpConnection')
-const RelpBatch = require('@teragrep/rlp_02/src/main/js/RelpBatch')
+const { SyslogMessage, Facility, SDElement, SDParam, Severity } = require('@teragrep/rlo_08')
+const { RelpConnection, RelpBatch } = require('@teragrep/rlp_02')
 const async = require('async');
 
 
@@ -38,41 +32,6 @@ async function contrlFlow(){
 }
 
 (async () => {(await contrlFlow())})();
-
-
-
-/*
-
-conn = (async () => { // This is for initial connection request
-  await init()
-})();
-
-if(conn != true){ // Dirty hack for fix the async flow control
-  init()
-  restService();
-}
-
-
-
-/**
- * 
- */
-/*
-async.waterfall([
-  function setConnect(start){
-    start(null, port, host)
-  },
-  setupConnection,
-  restService,
-  disconnect
-], function(err, result) {
-  if(err){
-    console.log('Error: '+ err)
-  }
-  else{
-    console.log('Done '+ result)  }
-})
-*/
 
 
 /**
@@ -153,7 +112,6 @@ module.exports = MockServer;
 
 
 async function init(){
-  
     let host = 'localhost';
     let port = 1601;
      return await setupConnection(port, host);

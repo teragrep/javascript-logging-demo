@@ -1,11 +1,6 @@
 const Server = require('../../node-server/Server')
-const SyslogMessage = require('@teragrep/rlo_08/src/main/js/SyslogMessage')
-const Facility = require('@teragrep/rlo_08/src/main/js/Facility')
-const Severity = require('@teragrep/rlo_08/src/main/js/Severity')
-const SDElement = require('@teragrep/rlo_08/src/main/js/SDElement')
-const SDParam = require('@teragrep/rlo_08/src/main/js/SDParam')
-const RelpConnection = require('@teragrep/rlp_02/src/main/js/RelpConnection')
-const RelpBatch = require('@teragrep/rlp_02/src/main/js/RelpBatch')
+const { SyslogMessage, Facility, SDElement, SDParam, Severity } = require('@teragrep/rlo_08')
+const { RelpConnection, RelpBatch } = require('@teragrep/rlp_02')
 const async = require('async');
 const http = require('http')
 
@@ -13,11 +8,10 @@ let relpConnection;
 const host = 'localhost';
 const port = 1601;
 
+
 var server = new Server(function (req, res){
     
 })
-
-
 
 
 server.listen(3000, () => {
@@ -26,35 +20,12 @@ server.listen(3000, () => {
 
 });
 
-const options = {
-    hostname: 'localhost',
-    port: '3000',
-    path: '/ua',
-    method: 'GET'
-}
-/**
- *  Act as a client and make the request to the server
- */
-const req = http.request(options, (res) => {
-    console.log(`statusCode: ${res.statusCode}`);
-
-    res.on('data', (data) => {
-        process.stdout.write(data)
-    });
-});
-
-req.setHeader('user-agent', ['type=iris-teragrep', 'language=javascript']);
-req.on('error', (err) => {
-    console.error(err);
-})
-req.end();
-
-
-/**
- * 
- */
+/*
+* This ensures to confirm the connection on the request, setup the relpconnection 
+* 
+*/
 server.on("request", async(req, res) => {
-    await setupConnection(port, host) // This ensures to confirm the connection on the request, setup the relpconnection to the java-relp-demo application
+    await setupConnection(port, host) //  setup the relpconnection to the java-relp-demo application
     if(req.url == '/'){
         return getHome(req, res)
     }
@@ -81,6 +52,9 @@ server.on("connection", (socket) =>{
       res.end();//end the response
 }
 
+/*
+* Endpoint for access to the generated response with user agent and syslog message 
+*/
 async function getUA(req, res){
 
     const userAgent = req.headers['user-agent']
@@ -145,3 +119,29 @@ async function setupConnection(port, host){
       resolve(relpConnection)
     })
   }
+
+
+/**
+ *  Act as a client and make the request to the server
+ */
+
+ const options = {
+    hostname: 'localhost',
+    port: '3000',
+    path: '/ua',
+    method: 'GET'
+}
+
+const req = http.request(options, (res) => {
+    console.log(`statusCode: ${res.statusCode}`);
+
+    res.on('data', (data) => {
+        process.stdout.write(data)
+    });
+});
+
+req.setHeader('user-agent', ['type=iris-teragrep', 'language=javascript']);
+req.on('error', (err) => {
+    console.error(err);
+})
+req.end();

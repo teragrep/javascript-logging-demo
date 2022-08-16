@@ -1,5 +1,5 @@
 const http = require('http')
-const RelpConnection = require('@teragrep/rlp_02/src/main/js/RelpConnection')
+const { RelpConnection } = require('@teragrep/rlp_02')
 
 
 class Server extends http.Server {
