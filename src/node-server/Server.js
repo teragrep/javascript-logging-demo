@@ -12,5 +12,17 @@ class Server extends http.Server {
         return this.start
     }
 
+    setDebugMode(mode){
+        if(mode == false){
+            return console.log = () => {};
+        }
+        else if(mode == true)  {
+            return (...args) => {
+            console.log(...args)
+          }     
+
+        }
+    }
+
 }
 module.exports = Server;

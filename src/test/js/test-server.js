@@ -8,12 +8,12 @@ let relpConnection;
 const host = 'localhost';
 const port = 1601;
 
-console.log = function() {} // This will redefine the console.log aka disable the all the log 🤠
 
 var server = new Server(function (req, res){
     
 })
 
+server.setDebugMode(false); // This flag will set to disable the all the log 🤠
 
 server.listen(3000, () => {
     //await setupConnection(port, host)
