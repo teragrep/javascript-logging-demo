@@ -64,7 +64,7 @@ mvn clean package
 node test-server.js
 -----------------
 
-* CURL request to the our test server running on PORT 3000
+** CURL request to the our test server running on PORT 3000
 +
 [source,shell]
 -----------------
