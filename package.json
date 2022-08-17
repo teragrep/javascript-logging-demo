@@ -21,7 +21,6 @@
     "@teragrep/rlo_08": "^1.0.1-rc1",
     "@teragrep/rlp_02": "^1.0.19-rc12",
     "async": "^3.2.1",
-    "async-mutex": "^0.3.2",
     "dotenv": "^10.0.0",
     "dsa.js": "^2.7.6",
     "jasmine": "^3.99.0",
@@ -29,7 +28,7 @@
     "karma": "^6.3.3",
     "karma-jasmine": "^4.0.1",
     "karma-requirejs": "^1.1.0",
-    "node": "^16.16.0",
+    "node": "^16.17.0",
     "requirejs": "^2.3.6"
   }
 }

@@ -13,3 +13,60 @@ User Story: As a dev/customer I would like to know how the rlo_08 + rlp_02 do wo
 *** RELP Connection should be kept online for sending meaning not connect and disconnect for each message.
 ** Launch demo web client app
 *** Make request
+
+
+=== Implementation
+
+* `Package.json installation *rlp_02 and rlo_08*`
++
+[source,node]
+-----------------
+npm install 
+-----------------
+
+* Module usage:
++
+[source,javascript]
+-----------------
+const { SyslogMessage, Facility, SDElement, SDParam, Severity } = require('@teragrep/rlo_08')
+const { RelpConnection, RelpBatch } = require('@teragrep/rlp_02')
+-----------------
+
+* RelpConnection usage:
++
+[source,javascript]
+-----------------
+async function setupConnection(port, host){
+    return new Promise(async (resolve, reject) => {
+      relpConnection = new RelpConnection();
+      let conn = await relpConnection.connect(port, host);	
+      console.log('Connectig...',host,' at PORT ', port)
+      resolve(relpConnection)
+    })
+  }
+-----------------
+
+* `Runtime  *INSTRUCTIONS*`
+** First, Make sure that run our java-relp-server-demo application jar
+** Build
++
+[source,java]
+-----------------
+mvn clean package
+-----------------
+
+* `OPTIONAL *TIPS*
+** You can run the test-server and make curl request to the server port at 3000`
+** * Run Server:
++
+[source,javascript]
+-----------------
+node test-server.js
+-----------------
+
+* CURL request to the our test server running on PORT 3000
++
+[source,shell]
+-----------------
+curl localhost:3000/ua
+-----------------
