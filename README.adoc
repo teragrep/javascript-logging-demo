@@ -14,6 +14,9 @@ User Story: As a dev/customer I would like to know how the rlo_08 + rlp_02 do wo
 ** Launch demo web client app
 *** Make request
 
+== High-level Architechture
+image::rlo_08_demo_arch.png[alt="Architechture",width=800,height=500]
+
 
 === Implementation
 
@@ -48,6 +51,12 @@ async function setupConnection(port, host){
 
 * `Runtime  *INSTRUCTIONS*`
 ** First, Make sure that run our java-relp-server-demo application jar
++
+[source,java]
+-----------------
+java -jar java-relp-server-demo-jar-with-dependencies.jar
+-----------------
+
 ** Build
 +
 [source,java]
@@ -55,8 +64,8 @@ async function setupConnection(port, host){
 mvn clean package
 -----------------
 
-* `OPTIONAL *TIPS*
-** You can run the test-server and make curl request to the server port at 3000`
+* OPTIONAL *TIPS*
+** You can run the test-server and make curl request to the server listening port at 3000
 ** * Run Server:
 +
 [source,javascript]
