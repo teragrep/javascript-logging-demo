@@ -14,13 +14,13 @@ User Story: As a dev/customer I would like to know how the rlo_08 + rlp_02 do wo
 ** Launch demo web client app
 *** Make request
 
-== High-level Architechture
-image::https://github.com/teragrep/javascript-logging-demo/blob/base-feat/images/rlo_08_demo_arch.png[alt="Architechture",width=800,height=500]
+== High-level Architecture
+image::https://github.com/teragrep/javascript-logging-demo/blob/base-feat/images/rlo_08_demo_arch.png[alt="Architecture",width=700,height=400]
 
 
-=== Implementation
+== Implementation
 
-* `Package.json installation *rlp_02 and rlo_08*`
+* `Package.json installation of *rlp_02 and rlo_08*`
 +
 [source,node]
 -----------------
