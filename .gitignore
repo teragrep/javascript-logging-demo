@@ -1,5 +1,7 @@
 node_modules
 node
 package-lock.json
+.settings
+.project
 #.env
 #.npmrc

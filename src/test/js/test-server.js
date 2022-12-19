@@ -75,7 +75,7 @@ async function getUA(req, res){
             .withProcId('8740') 
             .withMsgId('ID47')
             .withMsg(userAgent) // Fixed
-            .withSDElement(new SDElement("exampleSDID@32473", new SDParam("iut", "3"), new SDParam("eventSource", "Application")))  
+            .withSDElement(new SDElement("exampleSDID@32473", new SDParam("iut", "3"), new SDParam("eventSource", "Äpplication")))  
             .withDebug(true)
             .build()
   
